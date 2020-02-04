@@ -38,7 +38,7 @@ export default {
   name: "login-form",
   data() {
     return {
-      userId: "",
+      userId: ""
     };
   },
   computed: {
@@ -50,17 +50,18 @@ export default {
     ...mapGetters(["hasError"])
   },
   methods: {
-    ...mapActions(['login']),
+    ...mapActions(["login"]),
     async onSubmit() {
       // eslint-disable-next-line no-unused-vars
-      const result = await this.login(this.userId)
-      // eslint-disable-next-line no-console
-      .then( data => console.log('result',data));
+      const result = await this.login(this.userId).then(data => {
+        // eslint-disable-next-line no-console
+        console.log("result", data);
+        if (result) {
+          this.$router.push("chat");
+        }
+      });
       // eslint-disable-next-line no-console
       // console.log('result',result);
-      // if(result) {
-        this.$router.push('chat');
-      // }
     }
   }
 };

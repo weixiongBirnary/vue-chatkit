@@ -12,41 +12,41 @@ let activeRoom = null;
 
 function setMembers() {
     const members = activeRoom.users.map(user => ({
-      username: user.id,
-      name: user.name,
-      presence: user.presence.state
+        username: user.id,
+        name: user.name,
+        presence: user.presence.state
     }));
     store.commit('setUsers', members);
-  }
+}
 
-  async function subscribeToRoom(roomId) {
+async function subscribeToRoom(roomId) {
     store.commit('clearChatRoom');
     activeRoom = await currentUser.subscribeToRoom({
-      roomId,
-      messageLimit: MESSAGE_LIMIT,
-      hooks: {
-        onMessage: message => {
-          store.commit('addMessage', {
-            name: message.sender.name,
-            username: message.senderId,
-            text: message.text,
-            date: moment(message.createdAt).format('h:mm:ss a D-MM-YYYY')
-          });
-        },
-        onPresenceChanged: () => {
-          setMembers();
-        },
-        onUserStartedTyping: user => {
-          store.commit('setUserTyping', user.id)
-        },
-        onUserStoppedTyping: () => {
-          store.commit('setUserTyping', null)
+        roomId,
+        messageLimit: MESSAGE_LIMIT,
+        hooks: {
+            onMessage: message => {
+                store.commit('addMessage', {
+                    name: message.sender.name,
+                    username: message.senderId,
+                    text: message.text,
+                    date: moment(message.createdAt).format('h:mm:ss a D-MM-YYYY')
+                });
+            },
+            onPresenceChanged: () => {
+                setMembers();
+            },
+            onUserStartedTyping: user => {
+                store.commit('setUserTyping', user.id)
+            },
+            onUserStoppedTyping: () => {
+                store.commit('setUserTyping', null)
+            }
         }
-      }
     });
     setMembers();
     return activeRoom;
-  }
+}
 
 async function connectUser(userId) {
     const chatManager = new ChatManager({
