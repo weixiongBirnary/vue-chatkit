@@ -32,13 +32,13 @@
 </template>
 
 <script>
-import { mapState, mapGetters } from "vuex";
+import { mapState, mapGetters, mapActions } from "vuex";
 
 export default {
   name: "login-form",
   data() {
     return {
-      userId: ""
+      userId: "",
     };
   },
   computed: {
@@ -48,6 +48,20 @@ export default {
     },
     ...mapState(["loading", "error"]),
     ...mapGetters(["hasError"])
+  },
+  methods: {
+    ...mapActions(['login']),
+    async onSubmit() {
+      // eslint-disable-next-line no-unused-vars
+      const result = await this.login(this.userId)
+      // eslint-disable-next-line no-console
+      .then( data => console.log('result',data));
+      // eslint-disable-next-line no-console
+      // console.log('result',result);
+      // if(result) {
+        this.$router.push('chat');
+      // }
+    }
   }
 };
 </script>
