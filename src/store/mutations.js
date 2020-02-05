@@ -12,7 +12,7 @@ export default {
         state.reconnect = reconnect;
     },
     setActiveRoom(state, roomId) {
-        state.active = roomId;
+        state.activeRoom = roomId;
     },
     setRooms(state, rooms) {
         state.rooms = rooms

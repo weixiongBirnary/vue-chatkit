@@ -56,7 +56,7 @@ export default {
       const result = await this.login(this.userId).then(data => {
         // eslint-disable-next-line no-console
         console.log("result", data);
-        if (result) {
+        if (data) {
           this.$router.push("chat");
         }
       });

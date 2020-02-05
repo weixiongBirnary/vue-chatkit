@@ -56,6 +56,7 @@ export default {
     },
     async isTyping() {
       await isTyping(this.activeRoom.id);
+      
     }
   }
 }
