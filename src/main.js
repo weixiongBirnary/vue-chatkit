@@ -16,7 +16,7 @@ Vue.config.productionTip = false
 Vue.use(BootstrapVue)
 Vue.use(VueChatScroll)
 
-console.log('router',router);
+// console.log('router',router);
 
 new Vue({
   // el: '#app',

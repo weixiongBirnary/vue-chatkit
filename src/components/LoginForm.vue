@@ -18,6 +18,7 @@
       </b-form-group>
 
       <b-button
+        block
         type="submit"
         variant="primary"
         class="ld-ext-right"
@@ -26,6 +27,13 @@
       >
         Login
         <div class="ld ld-ring ld-spin"></div>
+      </b-button>
+      <b-button
+        block
+        @click="createUser"
+        :class="loading"
+      >
+      Create
       </b-button>
     </b-form>
   </div>
@@ -62,6 +70,9 @@ export default {
       });
       // eslint-disable-next-line no-console
       // console.log('result',result);
+    },
+    createUser() {
+      this.$router.push("createuser");
     }
   }
 };
