@@ -3,7 +3,7 @@
     <b-navbar id="create-navbar" type="dark" variant="info">
       <b-navbar-brand>注册用户</b-navbar-brand>
     </b-navbar>
-    <b-form @click.prevent="onsubmit">
+    <b-form @submit.prevent="onsubmit">
       <b-container fluid>
         <b-row v-for="type in types" :key="type.type" class="my-1">
           <b-col sm="3">
@@ -16,10 +16,10 @@
           </b-col>
         </b-row>
         <b-row class="createuser-btn">
-          <b-col lg="6" class="pd-2">
+          <b-col >
             <b-button variant="success" type="submit">注册</b-button>
           </b-col>
-          <b-col lg="6" class="pd-2">
+          <b-col >
             <b-button variant="danger" @click="jumpToFirstPage">返回</b-button>
           </b-col>
         </b-row>
@@ -77,13 +77,13 @@ export default {
     async onsubmit() {
       const username = this.types[0].value;
       await this.createUser(username);
-    //   await this.login(username).then(data => {
-    //       // eslint-disable-next-line no-console
-    //     console.log("result", data);
-    //     if (data) {
-    //       this.$router.push("chat");
-    //     }
-    //   });
+      // await this.login(username).then(data => {
+      //     // eslint-disable-next-line no-console
+      //   console.log("result", data);
+      //   if (data) {
+      //     this.$router.push("chat");
+      //   }
+      // });
       //   this.$router.push("/");
     }
   }

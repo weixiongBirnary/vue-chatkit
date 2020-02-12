@@ -2,7 +2,10 @@
 import chatkit from '../chatkit';
 
 function handleError(commit, error) {
-    const message = error.message || error.info.error_description;
+    const message = error.message || error;
+    // const message = error.message || error.info.error_description || error;
+    // eslint-disable-next-line no-console
+    console.log('errorMessage',message);
     commit('setError', message);
 }
 
@@ -61,14 +64,14 @@ export default {
             commit('setSending', false);
         }
     },
-    async createUser({ commit }, name) {
+    async createUser({ commit }, userObj) {
         try {
             commit('setError', '');
             commit('setSending', true);
             // const currentUser = chatkit.connectUser('boss');
-            await chatkit.createUser(name);
+            await chatkit.createUser(userObj);
         } catch (e) {
-            handleError(commit, e);
+            handleError(commit, `createUser${e}`);
         } finally {
             commit('setSending', false);
         }
