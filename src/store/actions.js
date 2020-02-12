@@ -1,3 +1,4 @@
+/* eslint-disable no-undef */
 import chatkit from '../chatkit';
 
 function handleError(commit, error) {
@@ -54,6 +55,18 @@ export default {
             commit('setSending', true);
             const messageId = await chatkit.sendMessage(text);
             return messageId;
+        } catch (e) {
+            handleError(commit, e);
+        } finally {
+            commit('setSending', false);
+        }
+    },
+    async createUser({ commit }, name) {
+        try {
+            commit('setError', '');
+            commit('setSending', true);
+            // const currentUser = chatkit.connectUser('boss');
+            await chatkit.createUser(name);
         } catch (e) {
             handleError(commit, e);
         } finally {

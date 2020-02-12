@@ -5,7 +5,10 @@ import store from './store/index'
 
 const INSTANCE_LOCATOR = process.env.VUE_APP_INSTANCE_LOCATOR;
 const TOKEN_URL = process.env.VUE_APP_TOKEN_URL;
+const INSTANCE_ID = process.env.VUE_APP_INSTANCE_ID;
 const MESSAGE_LIMIT = Number(process.env.VUE_APP_MESSAGE_LIMIT) || 10;
+// eslint-disable-next-line no-console
+console.log('INSTANCE_LOCATOR', INSTANCE_ID);
 
 let currentUser = null;
 let activeRoom = null;
@@ -74,9 +77,30 @@ async function connectUser(userId) {
     return currentUser;
 }
 
+async function createUser(name) {
+    const data = {
+        token: new TokenProvider({ url: TOKEN_URL }),
+        id: name,
+        name
+    }
+    const token = new TokenProvider({ url: TOKEN_URL });
+    // eslint-disable-next-line no-console
+    console.log('token', token);
+    const fetchUrl = `https://us1.pusherplatform.io/services/chatkit/v6/${INSTANCE_ID}/users`;
+    await fetch(fetchUrl,{
+        method: 'POST',
+        body: JSON.stringify(data)
+    })
+    // await boss.createUser({
+    //     id: name,
+    //     name
+    // })
+}
+
 export default {
     sendMessage,
     disconnectUser,
     connectUser,
+    createUser,
     subscribeToRoom
 }
