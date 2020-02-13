@@ -23,7 +23,8 @@ export default new Vuex.Store({
     rooms: [],
     users: [],
     messages: [],
-    userTyping: null
+    userTyping: null,
+    alertList: []
   },
   mutations,
   actions,

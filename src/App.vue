@@ -2,6 +2,7 @@
   <div id="app">
     <!-- <login/> -->
     <!-- <chat/> -->
+    <b-alert variant="danger">测试</b-alert>
     <router-view/>
   </div>
 </template>

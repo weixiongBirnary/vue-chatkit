@@ -2,12 +2,28 @@
 import chatkit from '../chatkit';
 
 function handleError(commit, error) {
-    const message = error.message || error;
+    const message = error.message || error.info.error_description || error;
     // const message = error.message || error.info.error_description || error;
-    // eslint-disable-next-line no-console
-    console.log('errorMessage',message);
+    
     commit('setError', message);
+    // eslint-disable-next-line no-console
+    console.log('errorMessage', message);
 }
+
+function handleAlert(commit, error) {
+    const value = error.message || error.info.error_description || error;
+    const len = value.length;
+    const now = new Date();
+    const id = now.getTime();
+    const variant = 'info';
+    commit('setAlertList',{
+        id, 
+        value,
+        len,
+        variant
+    })
+}
+
 
 export default {
     async login({ commit, state }, userId) {
@@ -40,6 +56,7 @@ export default {
             return true;
         } catch (e) {
             handleError(commit, e);
+            handleAlert(commit, e);
         } finally {
             commit('setLoading', false);
         }
@@ -50,6 +67,7 @@ export default {
             commit('setActiveRoom', { id, name });
         } catch (e) {
             handleError(commit, e);
+            handleAlert(commit, e);
         }
     },
     async sendMessage({ commit }, text) {
@@ -60,6 +78,7 @@ export default {
             return messageId;
         } catch (e) {
             handleError(commit, e);
+            handleAlert(commit, e);
         } finally {
             commit('setSending', false);
         }
@@ -72,6 +91,7 @@ export default {
             await chatkit.createUser(userObj);
         } catch (e) {
             handleError(commit, `createUser${e}`);
+            handleAlert(commit, e);
         } finally {
             commit('setSending', false);
         }

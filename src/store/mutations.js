@@ -2,6 +2,12 @@ export default {
     setError(state, error) {
         state.error = error;
     },
+    setAlertList(state, alert) {
+        state.alertList.push(alert);
+    },
+    shiftAlert(state) {
+        state.alertList.shift();
+    },
     setLoading(state, loading) {
         state.loading = loading;
     },

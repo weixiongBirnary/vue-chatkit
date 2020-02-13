@@ -4,7 +4,7 @@
     <hr />
     <b-form @submit.prevent="onSubmit">
       <b-alert variant="danger" :show="hasError">{{ error }}</b-alert>
-
+      <alertList/>
       <b-form-group id="userInputGroup" label="User Name" label-for="userInput">
         <b-form-input
           id="userInput"
@@ -41,9 +41,13 @@
 
 <script>
 import { mapState, mapGetters, mapActions } from "vuex";
+import alertList from '../components/messageAlert';
 
 export default {
   name: "login-form",
+  components: {
+    alertList
+  },
   data() {
     return {
       userId: ""
