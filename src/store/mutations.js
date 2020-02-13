@@ -5,8 +5,8 @@ export default {
     setAlertList(state, alert) {
         state.alertList.push(alert);
     },
-    shiftAlert(state) {
-        state.alertList.shift();
+    shiftAlert(state, index) {
+        index > -1 ? state.alertList.splice(index, 0) :  state.alertList.shift();
     },
     setLoading(state, loading) {
         state.loading = loading;

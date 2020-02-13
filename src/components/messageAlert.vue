@@ -3,15 +3,17 @@
     <!-- <b-button @click="shiftAlert">删除信息</b-button> -->
     <transition-group
       name="alertgroup"
-      enter-active-class="animated fadeInRight"
-      leave-active-class="animated fadeOutRight delay-5s"
+      enter-active-class="animated fadeInRight delay-2s"
+      leave-active-class="animated fadeOutRight delay-3s"
       @after-enter="afterEnter"
     >
       <b-alert
-        v-for="( alert, index ) in alertList"
-        :key="index"
+        v-for="( alert ) in alertList"
+        :key="alert.id"
         :variant="alert.variant"
         :show="alertLen"
+        @mouseenter="enterAlert"
+        @click="deleteThisAlert(index)"
       >{{ alert.value }}</b-alert>
     </transition-group>
   </div>
@@ -40,6 +42,11 @@ export default {
     enterAlert() {
       // eslint-disable-next-line no-console
       console.log("focus", new Date());
+    },
+    deleteThisAlert(index) {
+        // eslint-disable-next-line no-console
+        console.log('alertIndex',index);
+      this.shiftAlert(index);
     }
   }
 };
