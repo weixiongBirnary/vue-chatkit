@@ -10,12 +10,11 @@ function handleError(commit, error) {
     console.log('errorMessage', message);
 }
 
-function handleAlert(commit, error) {
+function handleAlert(commit, error, variant) {
     const value = error.message || error.info.error_description || error;
     const len = value.length;
     const now = new Date();
     const id = now.getTime();
-    const variant = 'info';
     commit('setAlertList',{
         id, 
         value,
@@ -56,7 +55,7 @@ export default {
             return true;
         } catch (e) {
             handleError(commit, e);
-            handleAlert(commit, e);
+            handleAlert(commit, e, 'danger');
         } finally {
             commit('setLoading', false);
         }
@@ -67,7 +66,7 @@ export default {
             commit('setActiveRoom', { id, name });
         } catch (e) {
             handleError(commit, e);
-            handleAlert(commit, e);
+            handleAlert(commit, e, 'danger');
         }
     },
     async sendMessage({ commit }, text) {
@@ -78,7 +77,7 @@ export default {
             return messageId;
         } catch (e) {
             handleError(commit, e);
-            handleAlert(commit, e);
+            handleAlert(commit, e, 'danger');
         } finally {
             commit('setSending', false);
         }
@@ -90,8 +89,8 @@ export default {
             // const currentUser = chatkit.connectUser('boss');
             await chatkit.createUser(userObj);
         } catch (e) {
-            handleError(commit, `createUser${e}`);
-            handleAlert(commit, e);
+            // handleError(commit, `createUser${e}`);
+            handleAlert(commit, e, 'danger');
         } finally {
             commit('setSending', false);
         }

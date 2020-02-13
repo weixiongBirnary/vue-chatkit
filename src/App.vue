@@ -2,7 +2,7 @@
   <div id="app">
     <!-- <login/> -->
     <!-- <chat/> -->
-    <b-alert variant="danger">测试</b-alert>
+    <alertList/>
     <router-view/>
   </div>
 </template>
@@ -10,10 +10,12 @@
 <script>
 // import login from './views/Login'
 // import chat from './views/ChatDashboard'
+import alertList from './components/messageAlert';
 export default {
   components: {
     // login,
     // chat
+    alertList,
   }
 }
 </script>
