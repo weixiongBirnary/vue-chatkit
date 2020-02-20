@@ -3,17 +3,17 @@
     <!-- <b-button @click="shiftAlert">删除信息</b-button> -->
     <transition-group
       name="alertgroup"
-      enter-active-class="animated fadeInRight delay-2s"
-      leave-active-class="animated fadeOutRight delay-3s"
-      @after-enter="afterEnter"
+      enter-active-class="animated fadeInRight"
+      leave-active-class="animated fadeOutRight"
+      
     >
       <b-alert
         v-for="( alert ) in alertList"
         :key="alert.id"
         :variant="alert.variant"
         :show="alertLen"
-        @mouseenter="enterAlert"
-        @click="deleteThisAlert(index)"
+        v-deleteThisAlert:[directivesArg]="{ fun: shiftAlert, time: 5}"
+        v-focusThisAlert="focusAlert"
       >{{ alert.value }}</b-alert>
     </transition-group>
   </div>
@@ -26,7 +26,35 @@ import { mapState, mapMutations } from "vuex";
 
 export default {
   data() {
-    return {};
+    return {
+      directivesArg: 'delete'
+    };
+  },
+  directives: {
+    deleteThisAlert: {
+      // eslint-disable-next-line no-unused-vars
+      inserted: function(el, binding){
+        const { fun, time } = binding.value;
+        const arg = binding.arg;
+        if(arg == 'delete') {
+          setInterval(fun, time * 1000)
+        }
+        
+      }
+    },
+    focusThisAlert: {
+      // eslint-disable-next-line no-unused-vars
+      inserted: function(el, binding) {
+        const fun = binding.value;
+        el.onmouseenter = fun;
+      }
+    },
+    dbClickThisAlert: {
+      inserted: function(el, binding) {
+        const fun = binding.value;
+        el.ondblclick = fun;
+      }
+    }
   },
   computed: {
     ...mapState(["alertList"]),
@@ -36,17 +64,15 @@ export default {
   },
   methods: {
     ...mapMutations(["shiftAlert"]),
-    afterEnter() {
-      setInterval(this.shiftAlert, 5 * 1000);
-    },
-    enterAlert() {
+    focusAlert() {
+      this.directivesArg = 'focus'
       // eslint-disable-next-line no-console
-      console.log("focus", new Date());
+      console.log("focus", this.directivesArg);
     },
     deleteThisAlert(index) {
-        // eslint-disable-next-line no-console
-        console.log('alertIndex',index);
-      this.shiftAlert(index);
+      // eslint-disable-next-line no-console
+      console.log('alertIndex',index);
+      // this.shiftAlert(index);
     }
   }
 };
